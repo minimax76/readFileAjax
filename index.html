@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" >
+<head>
+<title>AJAX | Primo esempio</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<script type="text/javascript" src="utility.js"><!--// ajax utility //--></script>
+<script type="text/javascript"><!--//
+
+
+// sostituzione del blocco inerente
+// la funzione dichiarata in onreadystatechange
+ajax.onreadystatechange = function() {
+
+  // verifica dello stato
+  if(ajax.readyState === readyState.COMPLETATO) {
+
+    // verifica della risposta da parte del server
+    if(statusText[ajax.status] === "OK") {
+
+      // verifica della validità dell'XML restituito dal server
+      if(ajax.responseXML)
+        // visualizzazione risultato parsing
+        elemento.innerHTML = parsaXml(ajax.responseXML);
+      else
+        // visualizzazione contenuto letto
+        // evitando di scrivere la risposta in modo
+        // interpretabile dal browser
+        elemento.innerHTML = "L'XML restituito dalla richiesta non è valido.<br />" +
+              ajax.responseText.split('<').join("&lt;").split('>').join("&gt;");
+      }
+    else
+      // errore di caricamento
+      elemento.innerHTML = "Impossibile effettuare l'operazione richiesta.<br />" +
+            "Errore riscontrato: " + statusText[ajax.status];
+  };
+};
+
+// ... resto codice file primo_esempio_ajax.html
+//--></script>
+<style type="text/css" media="all">
+body {
+ font-family: Verdana, Helvetica, sans-serif;
+ font-size: 9pt;
+ background: #FFF;
+ color: #000;
+}
+h1 {
+ font-size: 12pt;
+ border-bottom: 1px solid silver;
+ color: #009;
+}
+</style>
+</head>
+<body>
+<div>
+<h1>Request Testuale</h1>
+
+<div id="contenuto-dinamico">
+Questo testo è stato inserito all'interno di un elemento di tipo div
+con id univoco: contenuto-dinamico .<br />
+Per cambiare questo contenuto è sufficiente clickare su
+
+<!-- è importante fare caso alla costruzione di questo link:
+     permette di leggere il testo anche senza AJAX -->
+<a href="testo.txt"
+onclick="return caricaTesto(this.href);"
+onkeypress="return this.onclick();"
+tabindex="1">questo link</a>.
+</div>
+
+</div>
+</body>
+</html> 
